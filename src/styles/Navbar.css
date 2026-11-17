@@ -226,3 +226,49 @@
     font-size: 0.75rem;
   }
 }
+
+/* ==========================================
+   OPTIMIZACIÓN DE NAVBAR EN MÓVILES */
+@media (max-width: 768px) {
+  /* 1. Topbar más fina */
+  .navbar-topbar {
+    padding: 4px 12px;
+    font-size: 0.7rem;
+  }
+
+  .topbar-container {
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Si quieres ocultar las redes sociales en el topbar móvil para que ocupe menos, descomenta la siguiente línea: */
+  /* .topbar-socials { display: none; } */
+
+  /* 2. Barra principal más compacta */
+  .navbar-main {
+    padding: 8px 14px;
+  }
+
+  /* Achicar un poco el logo y el texto en celulares */
+  .brand-logo-img {
+    height: 32px; /* Baja de 40px a 32px */
+  }
+
+  .brand-name {
+    font-size: 1.05rem; /* Baja de 1.25rem a un tamaño más ágil */
+  }
+
+  /* Botón de carrito y hamburguesa más integrados */
+  .nav-actions {
+    gap: 10px;
+  }
+
+  .cart-badge-link {
+    padding: 6px 10px;
+  }
+
+  .menu-toggle-btn {
+    font-size: 1.35rem;
+    padding: 2px;
+  }
+}
