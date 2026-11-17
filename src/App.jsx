@@ -8,7 +8,7 @@ import Galeria from './pages/Galeria';
 import Calculadora from './pages/Calculadora';
 import Contacto from './pages/Contacto';
 import WhatsAppButton from './components/WhatsAppButton';
-import ScrollToTop from './components/ScrollToTop'; // 👈 Importamos ScrollToTop
+import ScrollToTop from './components/ScrollToTop';
 
 export default function App() {
   const [carrito, setCarrito] = useState([]);
@@ -53,7 +53,7 @@ export default function App() {
 
   return (
     <>
-      <ScrollToTop /> {/* 👈 Hace que toda página nueva arranque arriba */}
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Layout carritoCount={totalUnidades} />}>
           <Route index element={<Home />} />
@@ -65,6 +65,7 @@ export default function App() {
                 carrito={carrito}
                 agregarAlCarrito={agregarAlCarrito}
                 quitarDelCarrito={quitarDelCarrito}
+                vaciarCarrito={vaciarCarrito}
               />
             }
           />
@@ -86,7 +87,7 @@ export default function App() {
         </Route>
       </Routes>
 
-      <WhatsAppButton />
+      <WhatsAppButton carrito={carrito} />
     </>
   );
 }

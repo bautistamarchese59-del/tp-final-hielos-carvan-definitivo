@@ -94,3 +94,11 @@
     border-color: transparent transparent transparent rgba(15, 23, 42, 0.92);
   }
 }
+
+/* Cuando el resumen de productos está activo en móvil, elevamos WhatsApp */
+@media (max-width: 640px) {
+  .whatsapp-float-btn.whatsapp-elevated {
+    bottom: 74px; /* Sube lo suficiente para quedar arriba de la barra de resumen */
+    z-index: 1002; /* Asegura que esté por encima de todo */
+  }
+}

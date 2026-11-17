@@ -2,10 +2,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Productos.css';
 
-export default function Productos({ carrito, agregarAlCarrito, quitarDelCarrito }) {
+export default function Productos({ carrito, agregarAlCarrito, quitarDelCarrito, vaciarCarrito }) {
   const navigate = useNavigate();
 
-  // Definición de los productos con su peso en kg para la cuenta
   const listaProductos = [
     {
       id: '3kg',
@@ -25,13 +24,11 @@ export default function Productos({ carrito, agregarAlCarrito, quitarDelCarrito 
     }
   ];
 
-  // Buscar la cantidad actual de cada producto en el carrito
   const getCantidad = (id) => {
     const item = carrito.find((prod) => String(prod.id) === String(id));
     return item ? item.cantidad : 0;
   };
 
-  // Cálculo total de kilos y bolsas en el carrito
   const totalBolsas = carrito.reduce((acc, item) => acc + item.cantidad, 0);
   
   const totalKilos = carrito.reduce((acc, item) => {
@@ -110,22 +107,34 @@ export default function Productos({ carrito, agregarAlCarrito, quitarDelCarrito 
           })}
         </div>
 
-        {/* Barra de Recuento Flotante de Kilos y Bolsas */}
+        {/* Barra de Recuento de Kilos y Bolsas con botón Vaciar */}
         {totalBolsas > 0 && (
           <div className="pedido-summary-bar">
             <div className="summary-info">
               <span className="summary-icon">🧊</span>
               <div>
-                <strong>Pedido: {totalBolsas} {totalBolsas === 1 ? 'bolsa seleccionada' : 'bolsas seleccionadas'} ({totalKilos} kg en total)</strong>
+                <strong>
+                  {totalBolsas} {totalBolsas === 1 ? 'bolsa' : 'bolsas'} ({totalKilos} kg)
+                </strong>
                 <p>Solicitá presupuesto directo por esta cantidad</p>
               </div>
             </div>
-            <button 
-              onClick={() => navigate('/contacto')} 
-              className="btn-summary-action"
-            >
-              SOLICITAR PRESUPUESTO →
-            </button>
+
+            <div className="summary-actions">
+              <button 
+                onClick={vaciarCarrito} 
+                className="btn-clear-cart"
+                title="Limpiar selección"
+              >
+                🗑️ Vaciar
+              </button>
+              <button 
+                onClick={() => navigate('/contacto')} 
+                className="btn-summary-action"
+              >
+                PRESUPUESTO →
+              </button>
+            </div>
           </div>
         )}
 

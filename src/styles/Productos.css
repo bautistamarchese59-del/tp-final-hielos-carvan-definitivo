@@ -92,7 +92,7 @@
 .card-img-wrapper img {
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain; /* Muestra la imagen entera sin recortarla ni deformarla */
+  object-fit: contain;
   transition: transform 0.4s ease;
 }
 
@@ -244,6 +244,32 @@
   margin: 2px 0 0 0;
 }
 
+.summary-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Botón de vaciar minimalista con estética oscura/rojiza */
+.btn-clear-cart {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-clear-cart:hover {
+  background: rgba(239, 68, 68, 0.25);
+  color: #ffffff;
+  border-color: rgba(239, 68, 68, 0.6);
+}
+
 .btn-summary-action {
   background: linear-gradient(135deg, #00a8e8, #0284c7);
   color: #ffffff;
@@ -263,64 +289,73 @@
   transform: translateY(-2px);
 }
 
+/* Diseño adaptado para celulares */
 @media (max-width: 768px) {
   .productos-page {
-    padding-bottom: 160px; /* Espacio extra abajo para que la barra fija no tape el último producto */
+    padding-bottom: 140px; /* Espacio holgado para que el footer y el copyright se lean bien al final */
   }
 
   .productos-grid {
     grid-template-columns: 1fr;
   }
 
-  /* Barra flotante fija abajo en celular */
+  /* Barra flotante inferior con separación para no tapar el footer ni el WhatsApp */
   .pedido-summary-bar {
     position: fixed;
-    bottom: 78px; /* Queda justo arriba del botón flotante de WhatsApp */
+    bottom: 12px; /* Flota elegante sin pegarse al borde absoluto */
     left: 12px;
     right: 12px;
     margin-top: 0;
-    padding: 12px 14px;
+    padding: 10px 12px;
     border-radius: 14px;
+    border: 1px solid rgba(56, 189, 248, 0.4);
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    text-align: left;
-    gap: 10px;
-    z-index: 999;
+    gap: 8px;
+    z-index: 1001;
     background: rgba(8, 18, 30, 0.96);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.7), 0 0 15px rgba(56, 189, 248, 0.25);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.85), 0 0 15px rgba(56, 189, 248, 0.2);
   }
 
   .summary-info {
     flex-direction: row;
     align-items: center;
-    gap: 10px;
-    flex: 1;
-    min-width: 0; /* Evita que el texto desborde el ancho */
+    gap: 8px;
+    text-align: left;
+    min-width: 0;
   }
 
   .summary-icon {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     flex-shrink: 0;
   }
 
   .summary-info strong {
-    font-size: 0.85rem;
-    line-height: 1.25;
+    font-size: 0.78rem;
+    white-space: nowrap;
   }
 
   .summary-info p {
-    display: none; /* Ocultamos el subtítulo en celular para mantenerla compacta */
+    display: none;
+  }
+
+  .summary-actions {
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .btn-clear-cart {
+    padding: 7px 9px;
+    font-size: 0.72rem;
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.3);
   }
 
   .btn-summary-action {
     width: auto;
-    padding: 10px 12px;
-    font-size: 0.75rem;
-    white-space: normal;
-    line-height: 1.2;
-    text-align: center;
-    flex-shrink: 0;
+    padding: 7px 10px;
+    font-size: 0.72rem;
   }
 }

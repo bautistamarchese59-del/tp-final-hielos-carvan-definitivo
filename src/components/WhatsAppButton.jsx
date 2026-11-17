@@ -1,14 +1,21 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import '../styles/WhatsAppButton.css';
 
-export default function WhatsAppButton() {
+export default function WhatsAppButton({ carrito = [] }) {
+  const location = useLocation();
   const telefonoWhatsapp = '541167391181';
   const mensajePredeterminado = encodeURIComponent('Hola! Quisiera realizar una consulta sobre sus bolsas de hielos.');
+
+  // Verificamos si estamos en /productos y hay al menos 1 bolsa en el carrito
+  const enProductos = location.pathname.includes('/productos');
+  const totalBolsas = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+  const debeSubir = enProductos && totalBolsas > 0;
 
   return (
     <a
       href={`https://wa.me/${telefonoWhatsapp}?text=${mensajePredeterminado}`}
-      className="whatsapp-float-btn"
+      className={`whatsapp-float-btn ${debeSubir ? 'whatsapp-elevated' : ''}`}
       target="_blank"
       rel="noopener noreferrer"
       title="Contactar por WhatsApp"
