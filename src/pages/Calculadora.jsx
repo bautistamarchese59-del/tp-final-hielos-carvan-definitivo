@@ -14,31 +14,52 @@ export default function Calculadora() {
   // Convertimos a número de forma segura para los cálculos (si está vacío cuenta como 0)
   const personas = personasInput === '' ? 0 : parseInt(personasInput, 10) || 0;
 
-  // Lógica de cálculo de kilos de hielo
+  // Lógica de cálculo de kilos de hielo (ajustada a valores reales)
   const calcularKilos = () => {
     if (personas <= 0) return 3;
-    let basePorPersona = 0.8;
 
-    if (clima === 'fresco') basePorPersona = 0.6;
-    if (clima === 'caluroso') basePorPersona = 1.2;
+    // 1. Base estándar de consumo en vasos por persona (0.5 kg)
+    let kilosPorPersona = 0.5;
 
-    if (duracion === 'corto') basePorPersona *= 0.8;
-    if (duracion === 'largo') basePorPersona *= 1.4;
+    // 2. Ajuste por clima (sumamos suplemento en lugar de multiplicar)
+    if (clima === 'templado') kilosPorPersona += 0.1;
+    if (clima === 'caluroso') kilosPorPersona += 0.25;
 
-    let total = personas * basePorPersona;
+    // 3. Ajuste por duración del evento
+    if (duracion === 'medio') kilosPorPersona += 0.1;
+    if (duracion === 'largo') kilosPorPersona += 0.25;
 
+    // 4. Extra para enfriar botellas en conservadoras o tachos
     if (enfriarBebidas) {
-      total += personas * 0.5;
+      kilosPorPersona += 0.35;
     }
 
-    return Math.max(3, Math.round(total));
+    const totalBruto = personas * kilosPorPersona;
+
+    // Redondeo práctico a bolsas comerciales (múltiplos de 3 kg si es chico, o de 5 kg si es grande)
+    if (totalBruto <= 15) {
+      return Math.max(3, Math.ceil(totalBruto / 3) * 3);
+    }
+    return Math.ceil(totalBruto / 5) * 5;
   };
 
   const kilosCalculados = calcularKilos();
 
+  // Cálculo automático de sugerencia de bolsas de 10 kg y 3 kg
+  const bolsas10 = Math.floor(kilosCalculados / 10);
+  const resto = kilosCalculados % 10;
+  const bolsas3 = resto > 0 ? Math.ceil(resto / 3) : 0;
+
   const handlePedirCalculo = () => {
+    const detalleBolsas = [
+      bolsas10 > 0 ? `${bolsas10} bolsa${bolsas10 > 1 ? 's' : ''} de 10 kg` : '',
+      bolsas3 > 0 ? `${bolsas3} bolsa${bolsas3 > 1 ? 's' : ''} de 3 kg` : '',
+    ]
+      .filter(Boolean)
+      .join(' + ');
+
     const mensaje = encodeURIComponent(
-      `¡Hola Hielos Carvan! Usé la calculadora de la web para un evento de ${personas} personas (${duracion}, clima ${clima}). Necesitaría un presupuesto aproximado por ${kilosCalculados} kg de hielo.`
+      `¡Hola Hielos Carvan! Usé la calculadora de la web para un evento de ${personas} personas (${duracion}, clima ${clima}). Necesitaría un presupuesto aproximado por ${kilosCalculados} kg de hielo (${detalleBolsas}).`
     );
     window.open(`https://wa.me/5491167391181?text=${mensaje}`, '_blank');
   };
@@ -156,7 +177,9 @@ export default function Calculadora() {
             <span className="result-subtitle">NECESITÁS APROXIMADAMENTE</span>
             <div className="result-number">{kilosCalculados} kg</div>
             <p className="result-legend">
-              Cálculo estimado a modo orientativo. Te sugerimos combinar bolsas de 3kg y 10kg según tu comodidad.
+              Sugerencia práctica: {bolsas10 > 0 && `${bolsas10} bolsa${bolsas10 > 1 ? 's' : ''} de 10 kg`}
+              {bolsas10 > 0 && bolsas3 > 0 && ' + '}
+              {bolsas3 > 0 && `${bolsas3} bolsa${bolsas3 > 1 ? 's' : ''} de 3 kg`}.
             </p>
             <div className="result-actions">
               <button onClick={() => navigate('/productos')} className="btn-cyan">

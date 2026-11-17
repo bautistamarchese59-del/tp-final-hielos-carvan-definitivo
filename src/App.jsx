@@ -5,9 +5,10 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import Productos from './pages/Productos';
 import Galeria from './pages/Galeria';
-import Calculadora from './pages/Calculadora'; // 👈 1. Importamos la Calculadora
+import Calculadora from './pages/Calculadora';
 import Contacto from './pages/Contacto';
 import WhatsAppButton from './components/WhatsAppButton';
+import ScrollToTop from './components/ScrollToTop'; // 👈 Importamos ScrollToTop
 
 export default function App() {
   const [carrito, setCarrito] = useState([]);
@@ -52,6 +53,7 @@ export default function App() {
 
   return (
     <>
+      <ScrollToTop /> {/* 👈 Hace que toda página nueva arranque arriba */}
       <Routes>
         <Route path="/" element={<Layout carritoCount={totalUnidades} />}>
           <Route index element={<Home />} />
@@ -69,7 +71,6 @@ export default function App() {
          
           <Route path="galeria" element={<Galeria />} />
           
-          {/* 👈 2. Agregamos la ruta de Calculadora */}
           <Route path="calculadora" element={<Calculadora />} />
          
           <Route

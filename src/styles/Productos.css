@@ -264,18 +264,63 @@
 }
 
 @media (max-width: 768px) {
+  .productos-page {
+    padding-bottom: 160px; /* Espacio extra abajo para que la barra fija no tape el último producto */
+  }
+
   .productos-grid {
     grid-template-columns: 1fr;
   }
+
+  /* Barra flotante fija abajo en celular */
   .pedido-summary-bar {
-    flex-direction: column;
-    text-align: center;
+    position: fixed;
+    bottom: 78px; /* Queda justo arriba del botón flotante de WhatsApp */
+    left: 12px;
+    right: 12px;
+    margin-top: 0;
+    padding: 12px 14px;
+    border-radius: 14px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    gap: 10px;
+    z-index: 999;
+    background: rgba(8, 18, 30, 0.96);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.7), 0 0 15px rgba(56, 189, 248, 0.25);
   }
+
   .summary-info {
-    flex-direction: column;
-    gap: 8px;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0; /* Evita que el texto desborde el ancho */
   }
+
+  .summary-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .summary-info strong {
+    font-size: 0.85rem;
+    line-height: 1.25;
+  }
+
+  .summary-info p {
+    display: none; /* Ocultamos el subtítulo en celular para mantenerla compacta */
+  }
+
   .btn-summary-action {
-    width: 100%;
+    width: auto;
+    padding: 10px 12px;
+    font-size: 0.75rem;
+    white-space: normal;
+    line-height: 1.2;
+    text-align: center;
+    flex-shrink: 0;
   }
 }
